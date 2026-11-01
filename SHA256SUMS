@@ -1,5 +1,5 @@
 66d480cb188c1c3ab8ac637e88ecb6324fda56f452e9efc337c8f55325dbf9f0  bin/sekhmet-v0.1.0-macos-aarch64
 7bbc737c634ccee2f2162545e0b37d04abb6d73138bddd5134b94d5aedcbdfb2  bin/sekhmet-v0.1.0-linux-aarch64
-8c40e56b53d54f7f85443b1f0e61c69cfe3e60bc781f25723393b40b3fd1dc27  bin/sekhmet-v0.1.0-linux-x86_64
 b50abfc9c6d2bba4f7cfa9deecec45bc477395039910c559ead8a07a61b74142  bin/sekhmet-v0.1.0-macos-x86_64
+e655e6ad247fa00774fac50dc7bffc8c7b18afd209eaa214826afdb531a5e685  bin/sekhmet-v0.1.0-linux-x86_64
 f7466b7d77d890252cce49ee5b62bb7b1d77022310dbe48600b1602a16b52f3b  bin/sekhmet-v0.1.0-windows-x86_64.exe
