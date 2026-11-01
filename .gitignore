@@ -1,4 +1,5 @@
+/target
+/*.db
+/*.db-shm
+/*.db-wal
 .DS_Store
-*.db
-*.db-shm
-*.db-wal

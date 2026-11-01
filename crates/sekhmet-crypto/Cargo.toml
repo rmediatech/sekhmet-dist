@@ -1,0 +1,19 @@
+[package]
+name = "sekhmet-crypto"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Bare-metal RFC cryptographic engine: RFC 9106 Argon2id equalizer, RFC 8032 Ed25519 JWT/JWKS, RFC 6238 TOTP & SHA-256 Merkle chain"
+
+[dependencies]
+argon2 = "0.5"
+ed25519-dalek = { version = "2.1", features = ["rand_core"] }
+sha2 = "0.10"
+hmac = "0.12"
+sha1 = "0.10"
+rand = "0.8"
+base64 = "0.22"
+hex = "0.4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"

@@ -1,0 +1,9 @@
+[package]
+name = "sekhmet-sanitize"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Sovereign OJP boundary sanitizer: formula neutralization, ANSI scrubbing, RFC 5322 email & service path guards"
+
+[dependencies]
+thiserror = "1.0"

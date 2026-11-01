@@ -1,0 +1,10 @@
+[package]
+name = "sekhmet-service"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Bare-metal cross-OS service lifecycle generator & installer (Linux systemd/OpenRC, FreeBSD rc.d, Windows SCM, macOS launchd)"
+
+[dependencies]
+sekhmet-sanitize = { path = "../sekhmet-sanitize" }
+thiserror = "1.0"

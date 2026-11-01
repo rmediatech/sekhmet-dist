@@ -1,0 +1,9 @@
+[package]
+name = "sekhmet-cidr"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Bare-metal bitwise IPv4/IPv6 CIDR prefix evaluator & domain origin boundary guard"
+
+[dependencies]
+thiserror = "1.0"

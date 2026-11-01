@@ -1,0 +1,48 @@
+[workspace]
+members = [
+    ".",
+    "crates/sekhmet-sanitize",
+    "crates/sekhmet-crypto",
+    "crates/sekhmet-cidr",
+    "crates/sekhmet-shield",
+    "crates/sekhmet-service",
+    "crates/sekhmet-store",
+    "crates/sekhmet-config",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Rick Walker <rick@rmediatech.com>"]
+license = "LicenseRef-RMediaTech-Sovereign-Commercial"
+
+[package]
+name = "sekhmet"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "Sovereign Universal Auth, Identity, Ed25519 JWT/OIDC, API Key & Multi-OS Service Engine"
+
+[[bin]]
+name = "sekhmet"
+path = "src/main.rs"
+
+[dependencies]
+sekhmet-sanitize = { path = "crates/sekhmet-sanitize" }
+sekhmet-crypto = { path = "crates/sekhmet-crypto" }
+sekhmet-cidr = { path = "crates/sekhmet-cidr" }
+sekhmet-shield = { path = "crates/sekhmet-shield" }
+sekhmet-service = { path = "crates/sekhmet-service" }
+sekhmet-store = { path = "crates/sekhmet-store" }
+sekhmet-config = { path = "crates/sekhmet-config" }
+
+axum = { version = "0.7", features = ["json"] }
+tokio = { version = "1.40", features = ["rt-multi-thread", "macros", "net", "signal", "time", "sync"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+tower = { version = "0.5", features = ["util"] }
+
+[dev-dependencies]
+http-body-util = "0.1"
