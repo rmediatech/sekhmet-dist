@@ -23,11 +23,14 @@
 
 ### Key Capabilities
 * **Universal Language Interoperability**: Any web, desktop, or mobile application integrates via standard HTTP/JSON requests or verifies asymmetric Ed25519 JWTs locally using the `/.well-known/jwks.json` discovery endpoint.
+* **Zero-Config Persistent Key Ring, Live Rotation & BYOK**: Automatically persists its Ed25519 signing key inside SQLite WAL (`skm_keystore`) across reboots, supports 0-downtime dual-slot key rotation (`sekhmet key rotate`) and Bring-Your-Own-Key import (`sekhmet key import --seed <hex>`) with cryptographic entropy validation, and silently issues `replacement_token` upgrades during `/v1/auth/introspect` so active users never experience session drops.
 * **Single-Source-of-Truth (SST) Configuration (`sekhmet.yaml`)**: Customize network bindings, token lifetimes, password policies, rate-limit thresholds, and subscription tier quotas in one declarative file.
-* **Built-In Multi-OS Service Installer**: Install and run natively as a background system service across Linux (`systemd` and `OpenRC`), Windows (`Service Control Manager`), FreeBSD (`rc.d`), and macOS (`launchd`).
-* **Multi-Factor & Email Verification**: Native RFC 6238 TOTP two-factor authentication and 6-digit email OTP verification gates.
+* **Built-In Multi-OS Service Installer & Uninstaller**: Install and cleanly teardown background system services across Linux (`systemd` and `OpenRC`), Windows (`Service Control Manager`), FreeBSD (`rc.d`), and macOS (`launchd`).
+* **Multi-Factor, Email Verification & Password Recovery**: Native RFC 6238 TOTP two-factor authentication, 6-digit email OTP verification gates, and OTP-verified password reset (`/v1/auth/password-reset/*`) that automatically revokes stale sessions.
 * **Boundary-Locked API Keys (`skm_live_...`)**: Mint and verify machine/tenant API keys locked to specific IPv4/IPv6 CIDR blocks and wildcard domain origins.
-* **Tamper-Evident Audit Verification**: Built-in cryptographic hash-chain auditing (`sekhmet audit`) to verify historical log integrity at any time.
+* **Autonomous Self-Learning Threat Memory & Subnet Herd Defense**: Automatically learns hostile IPs across reboots, promotes coordinated `/24` botnet subnets into automatic quarantine, learns trusted `/24` login baselines per user (`unseen_subnet_anomaly` detection), and immunizes trusted user subnets against distributed credential-stuffing lockout DoS.
+* **Autonomous Self-Healing & Forensic Quarantine**: Self-heals legacy schema constraints on boot, auto-graduates expired `retiring_ed25519` keys after their grace window, and isolates + re-anchors corrupted Merkle audit rows into `skm_forensic_quarantine` (`sekhmet heal` / `POST /v1/system/self-heal`).
+* **Tamper-Evident Audit Verification & WAL Maintenance**: Built-in cryptographic hash-chain auditing (`sekhmet audit`) and automated session pruning/WAL checkpointing (`sekhmet maintenance`).
 
 ---
 
@@ -71,9 +74,21 @@ chmod +x ./bin/sekhmet-v0.1.0-linux-x86_64
 # Run directly in the foreground
 ./bin/sekhmet-v0.1.0-linux-x86_64 serve --config ./sekhmet.yaml
 
-# Preview or install native OS service (systemd | openrc | freebsd | windows | macos)
+# Preview, install, or uninstall native OS service (systemd | openrc | freebsd | windows | macos)
 ./bin/sekhmet-v0.1.0-linux-x86_64 service preview --config ./sekhmet.yaml --os systemd
 sudo ./bin/sekhmet-v0.1.0-linux-x86_64 service install --config ./sekhmet.yaml --os systemd
+sudo ./bin/sekhmet-v0.1.0-linux-x86_64 service uninstall --config ./sekhmet.yaml --os systemd
+
+# Zero-Downtime Ed25519 Key Ring Management (Status, Rotate, or Bring-Your-Own-Key Import)
+./bin/sekhmet-v0.1.0-linux-x86_64 key status --config ./sekhmet.yaml
+./bin/sekhmet-v0.1.0-linux-x86_64 key rotate --config ./sekhmet.yaml
+./bin/sekhmet-v0.1.0-linux-x86_64 key import --config ./sekhmet.yaml --seed <64-char-hex-seed>
+
+# Autonomous Self-Healing, Learned Threat Intelligence, Merkle Audit & WAL Maintenance
+./bin/sekhmet-v0.1.0-linux-x86_64 heal --config ./sekhmet.yaml
+./bin/sekhmet-v0.1.0-linux-x86_64 intel --config ./sekhmet.yaml
+./bin/sekhmet-v0.1.0-linux-x86_64 audit --config ./sekhmet.yaml
+./bin/sekhmet-v0.1.0-linux-x86_64 maintenance --config ./sekhmet.yaml
 ```
 
 ---
@@ -85,17 +100,21 @@ Once running (default `http://127.0.0.1:4410`), any application stack can call t
 | Endpoint | Method | Purpose |
 | :--- | :--- | :--- |
 | `/healthz` | `GET` | Liveness and configured issuer status |
-| `/.well-known/jwks.json` | `GET` | RFC 7517 Ed25519 public key discovery (`OKP` / `EdDSA`) |
+| `/.well-known/jwks.json` | `GET` | RFC 7517 Ed25519 public key discovery (`OKP` / `EdDSA`, publishes both `primary` & `retiring` keys) |
 | `/v1/tenants` | `POST` | Register an application tenant (`community`, `starter`, `business`, `profleet`) |
 | `/v1/tenants/subscription` | `POST` | Update tenant tier or active/suspended status |
 | `/v1/auth/register` | `POST` | Register a user account (with optional RFC 6238 TOTP secret) |
 | `/v1/auth/verify-email` | `POST` | Verify 6-digit email OTP code |
-| `/v1/auth/login` | `POST` | Authenticate credentials (+ optional TOTP) and issue Ed25519 JWT |
-| `/v1/auth/introspect` | `POST` | Verify JWT signature, expiration, tenant binding, and revocation state |
+| `/v1/auth/login` | `POST` | Authenticate credentials (+ optional TOTP), evaluate learned `/24` baseline, and issue Ed25519 JWT |
+| `/v1/auth/introspect` | `POST` | Verify JWT signature, expiration, tenant binding, and silently issue `replacement_token` if key rotated |
 | `/v1/auth/revoke` | `POST` | Immediately revoke an active session `jti` |
+| `/v1/auth/password-reset/request` | `POST` | Generate a 6-digit password reset OTP for an account |
+| `/v1/auth/password-reset/confirm` | `POST` | Verify reset OTP, update Argon2id password hash, and revoke all prior sessions |
 | `/v1/keys/mint` | `POST` | Mint a `skm_live_...` API key with optional IPv4/IPv6 CIDR & domain locks |
 | `/v1/keys/verify` | `POST` | Verify an API key against caller IP and domain origin |
 | `/v1/audit/verify` | `GET` | Cryptographically verify the entire tamper-evident audit chain |
+| `/v1/system/self-heal` | `POST` | Run autonomous self-healing sweep (schema, keystore, retiring key graduation, Merkle re-anchoring) |
+| `/v1/system/intelligence` | `GET` | Inspect learned threat quarantines, `/24` botnet promotions, user baselines, and forensic events |
 
 See [`docs/01_EMPIRICAL_VERIFICATION_AND_API_GUIDE.md`](docs/01_EMPIRICAL_VERIFICATION_AND_API_GUIDE.md) for copy-paste integration examples in **Node.js, PHP, Python, Go, and cURL**.
 

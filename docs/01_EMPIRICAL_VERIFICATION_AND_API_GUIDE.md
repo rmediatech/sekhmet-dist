@@ -19,7 +19,9 @@ export async function verifyUserToken(token, expectedTenantId) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ token, expected_tenant_id: expectedTenantId }),
   });
-  return await res.json(); // { active: true, sub: "usr_...", tid: "...", role: "..." }
+  return await res.json();
+  // Returns: { active: true, sub: "usr_...", tid: "...", role: "...", key_rotated: false, replacement_token: null }
+  // If key_rotated === true, pass result.replacement_token back to the client cookie/header for 0-drop key rotation!
 }
 ```
 
