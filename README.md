@@ -17,6 +17,14 @@
 
 ---
 
+## 🏛️ Mythological Lineage & Geometric Rationale
+
+* **The Solar Lioness of Divine Power**: In ancient Egyptian theology, **Sekhmet** (*Sakhmi* — "The Powerful One") was the solar lioness goddess of war, sovereign fury, divine healing, and protector of cosmic balance (*Ma'at*). She was depicted crowned with the solar disc and the divine Uraeus cobra, capable of scorching hostile adversaries with solar fire while bestowing restorative healing upon the worthy.
+* **Sovereign Architectural Role**: In our software ecosystem, **`sekhmet`** serves as the universal authentication and identity core. It fiercely defends application boundaries against brute-force intrusion, credential stuffing, and unauthorized access, while dispensing pristine cryptographic access tokens (Ed25519 JWT/JWKS, RFC 6238 TOTP, and CIDR-locked API keys) to legitimate clients.
+* **Mathematical Crest Geometry**: Generated purely from mathematical parametric equations on a transparent background, the emblem features a central **Solar Disc of Ra** emitting 24 mathematical golden spiral flares ($r = a e^{b\theta}$) forming a dynamic solar lion's mane, flanked by symmetric hyperbolic Uraeus cobra crests, framed by a 72-division polar azimuth ring.
+
+---
+
 ## 🏛️ 1. Overview
 
 **Sekhmet** is a self-contained, zero-cloud authentication, session management, and API key custody daemon distributed as a single standalone executable. It replaces third-party cloud identity providers and heavyweight runtime containers with a single local binary that starts in milliseconds, requires zero external database servers, and speaks standard IETF RFC protocols over HTTP/JSON.
