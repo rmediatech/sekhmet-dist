@@ -5,7 +5,10 @@
 <h1 align="center">SEKHMET — Universal Sovereign Auth & Identity Engine</h1>
 
 <p align="center">
+  <a href="https://github.com/rmediatech/sekhmet-dist/releases/tag/v0.1.0"><img src="https://img.shields.io/badge/Release-v0.1.0-brightgreen.svg" alt="Release" /></a>
   <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS%20%7C%20BSD-blue.svg" alt="Platform" />
+  <img src="https://img.shields.io/badge/Multi--OS%20Binaries-5%20Targets-blueviolet.svg" alt="Multi-OS Binaries" />
+  <a href="https://github.com/rmediatech/sekhmet"><img src="https://img.shields.io/badge/Source-Engine%20Repo-orange.svg" alt="Engine Repo" /></a>
   <img src="https://img.shields.io/badge/Standards-RFC%207519%20%7C%20RFC%208032%20%7C%20RFC%206238%20%7C%20RFC%209106-brightgreen.svg" alt="RFC Standards" />
   <img src="https://img.shields.io/badge/Provenance-GPG%20Signed%20(SOVEREIGN--SIGN--01)-blueviolet.svg" alt="Signed" />
   <img src="https://img.shields.io/badge/Privacy-100%25%20Zero--Cloud%20Local%20Custody-success.svg" alt="Privacy" />
