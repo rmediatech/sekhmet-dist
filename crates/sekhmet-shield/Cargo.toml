@@ -1,9 +1,0 @@
-[package]
-name = "sekhmet-shield"
-version.workspace = true
-edition.workspace = true
-authors.workspace = true
-description = "Phylax + Slow-Shield perimeter defense: structural honeypots, sliding token-bucket & cross-IP handle velocity guard"
-
-[dependencies]
-thiserror = "1.0"

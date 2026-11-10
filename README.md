@@ -2,15 +2,15 @@
   <img src="assets/sekhmet_emblem.svg" width="220" height="220" alt="Sekhmet Sovereign Emblem" />
 </p>
 
-<h1 align="center">SEKHMET — Universal Sovereign Auth & Identity Engine</h1>
+<h1 align="center">SEKHMET (`sekhmet-dist`) — Universal Sovereign Auth & Identity Engine</h1>
 
 <p align="center">
   <a href="https://github.com/rmediatech/sekhmet-dist/releases/tag/v0.1.0"><img src="https://img.shields.io/badge/Release-v0.1.0-brightgreen.svg" alt="Release" /></a>
+  <a href="https://rmediatech.com/downloads"><img src="https://img.shields.io/badge/Downloads-rmediatech.com%2Fdownloads-blue.svg" alt="Downloads" /></a>
   <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS%20%7C%20BSD-blue.svg" alt="Platform" />
   <img src="https://img.shields.io/badge/Multi--OS%20Binaries-5%20Targets-blueviolet.svg" alt="Multi-OS Binaries" />
-  <a href="https://github.com/rmediatech/sekhmet"><img src="https://img.shields.io/badge/Source-Engine%20Repo-orange.svg" alt="Engine Repo" /></a>
   <img src="https://img.shields.io/badge/Standards-RFC%207519%20%7C%20RFC%208032%20%7C%20RFC%206238%20%7C%20RFC%209106-brightgreen.svg" alt="RFC Standards" />
-  <img src="https://img.shields.io/badge/Provenance-GPG%20Signed%20(SOVEREIGN--SIGN--01)-blueviolet.svg" alt="Signed" />
+  <a href="SOVEREIGN_RELEASE_KEY.asc"><img src="https://img.shields.io/badge/Provenance-GPG%20Signed%20(SOVEREIGN--SIGN--01)-blueviolet.svg" alt="Signed" /></a>
   <img src="https://img.shields.io/badge/Privacy-100%25%20Zero--Cloud%20Local%20Custody-success.svg" alt="Privacy" />
 </p>
 
@@ -45,22 +45,34 @@
 
 ---
 
-## 📦 2. Pre-Compiled Binary Matrix (`v0.1.0`)
+## 📦 2. Pre-Compiled Binary Matrix & Download Portal
 
-All binaries in [`bin/`](bin/) are self-contained standalone executables signed with the RMediaTech Sovereign Release Key (`4E428019A109578B`):
+Verified standalone binaries are distributed directly through the **[RMediaTech Sovereign Binary Vault](https://rmediatech.com/downloads)**:
 
-| Target Operating System | Architecture | Binary Path | Detached GPG Signature |
+| Target Operating System | Architecture | Checksum (SHA-256) | Vault Download |
 | :--- | :--- | :--- | :--- |
-| **Linux (Static Standalone)** | `x86_64` | [`bin/sekhmet-v0.1.0-linux-x86_64`](bin/sekhmet-v0.1.0-linux-x86_64) | [`.sha256.asc`](bin/sekhmet-v0.1.0-linux-x86_64.sha256.asc) |
-| **Linux (ARM64 Static)** | `aarch64` | [`bin/sekhmet-v0.1.0-linux-aarch64`](bin/sekhmet-v0.1.0-linux-aarch64) | [`.sha256.asc`](bin/sekhmet-v0.1.0-linux-aarch64.sha256.asc) |
-| **Windows (Standalone PE)** | `x86_64` | [`bin/sekhmet-v0.1.0-windows-x86_64.exe`](bin/sekhmet-v0.1.0-windows-x86_64.exe) | [`.sha256.asc`](bin/sekhmet-v0.1.0-windows-x86_64.exe.sha256.asc) |
-| **macOS (Intel)** | `x86_64` | [`bin/sekhmet-v0.1.0-macos-x86_64`](bin/sekhmet-v0.1.0-macos-x86_64) | [`.sha256.asc`](bin/sekhmet-v0.1.0-macos-x86_64.sha256.asc) |
-| **macOS (Apple Silicon)** | `aarch64` | [`bin/sekhmet-v0.1.0-macos-aarch64`](bin/sekhmet-v0.1.0-macos-aarch64) | [`.sha256.asc`](bin/sekhmet-v0.1.0-macos-aarch64.sha256.asc) |
+| **Linux (Static Musl)** | `x86_64` | `bb8fad48a8b45b250fa4cb86f0b294972eb48a5734cf9f237800723284fd88be` | [Download (4.2 MB)](https://rmediatech.com/bin/sekhmet) |
+| **Linux (ARM64 Static)** | `aarch64` | `a0f33f638c8a6102639eb585315e684696ef1c449b12074999ad268e286c911c` | [Download (4.1 MB)](https://rmediatech.com/bin/sekhmet?arch=aarch64) |
+| **Windows (Standalone PE)** | `x86_64` | `1d8cd80e8d2bd47be305c76aa737ee9f4290b27cdffb4248bce44f36afd9aba3` | [Download (4.5 MB)](https://rmediatech.com/bin/sekhmet.exe) |
+| **macOS (Intel)** | `x86_64` | `0844db842949a8c004c3a56bca168f312d727dd6298dbfb9c36713e4836ee5c3` | [Download (4.4 MB)](https://rmediatech.com/bin/sekhmet-darwin-x86_64) |
+| **macOS (Apple Silicon)** | `aarch64` | `c5aa964fb4063d496d25144cd950fc2ffd8b3c993680eed73e0b98ade85299ce` | [Download (4.3 MB)](https://rmediatech.com/bin/sekhmet-darwin-arm64) |
+
+### 1-Click Stream Download & Installation
+```bash
+# 1-Click Stream Install
+curl -sSL https://rmediatech.com/install/sekhmet | sh
+
+# Or Direct Binary Download
+curl -sSL https://rmediatech.com/bin/sekhmet -o sekhmet
+chmod +x sekhmet
+```
 
 ### Cryptographic Verification (`SOVEREIGN-SIGN-01`)
+All releases are cryptographically sealed by `Rick Walker (Sovereign Release Signing Key) <rick@rmediatech.com>` (Key ID: `4E428019A109578B`):
+
 ```bash
 # 1. Import the Sovereign Release Public Key
-gpg --import SOVEREIGN_RELEASE_KEY.asc
+curl -sSL https://rmediatech.com/SOVEREIGN_RELEASE_KEY.asc | gpg --import
 
 # 2. Verify the Master Checksum Manifest Signature
 gpg --verify SHA256SUMS.asc SHA256SUMS
@@ -75,31 +87,30 @@ sha256sum -c SHA256SUMS
 
 ### Step 1: Generate & Validate SST Configuration (`sekhmet.yaml`)
 ```bash
-chmod +x ./bin/sekhmet-v0.1.0-linux-x86_64
-./bin/sekhmet-v0.1.0-linux-x86_64 config init --out ./sekhmet.yaml
-./bin/sekhmet-v0.1.0-linux-x86_64 config validate --config ./sekhmet.yaml
+sekhmet config init --out ./sekhmet.yaml
+sekhmet config validate --config ./sekhmet.yaml
 ```
 
 ### Step 2: Run Interactively or Install as an OS Service
 ```bash
 # Run directly in the foreground
-./bin/sekhmet-v0.1.0-linux-x86_64 serve --config ./sekhmet.yaml
+sekhmet serve --config ./sekhmet.yaml
 
 # Preview, install, or uninstall native OS service (systemd | openrc | freebsd | windows | macos)
-./bin/sekhmet-v0.1.0-linux-x86_64 service preview --config ./sekhmet.yaml --os systemd
-sudo ./bin/sekhmet-v0.1.0-linux-x86_64 service install --config ./sekhmet.yaml --os systemd
-sudo ./bin/sekhmet-v0.1.0-linux-x86_64 service uninstall --config ./sekhmet.yaml --os systemd
+sekhmet service preview --config ./sekhmet.yaml --os systemd
+sudo sekhmet service install --config ./sekhmet.yaml --os systemd
+sudo sekhmet service uninstall --config ./sekhmet.yaml --os systemd
 
 # Zero-Downtime Ed25519 Key Ring Management (Status, Rotate, or Bring-Your-Own-Key Import)
-./bin/sekhmet-v0.1.0-linux-x86_64 key status --config ./sekhmet.yaml
-./bin/sekhmet-v0.1.0-linux-x86_64 key rotate --config ./sekhmet.yaml
-./bin/sekhmet-v0.1.0-linux-x86_64 key import --config ./sekhmet.yaml --seed <64-char-hex-seed>
+sekhmet key status --config ./sekhmet.yaml
+sekhmet key rotate --config ./sekhmet.yaml
+sekhmet key import --config ./sekhmet.yaml --seed <64-char-hex-seed>
 
 # Autonomous Self-Healing, Learned Threat Intelligence, Merkle Audit & WAL Maintenance
-./bin/sekhmet-v0.1.0-linux-x86_64 heal --config ./sekhmet.yaml
-./bin/sekhmet-v0.1.0-linux-x86_64 intel --config ./sekhmet.yaml
-./bin/sekhmet-v0.1.0-linux-x86_64 audit --config ./sekhmet.yaml
-./bin/sekhmet-v0.1.0-linux-x86_64 maintenance --config ./sekhmet.yaml
+sekhmet heal --config ./sekhmet.yaml
+sekhmet intel --config ./sekhmet.yaml
+sekhmet audit --config ./sekhmet.yaml
+sekhmet maintenance --config ./sekhmet.yaml
 ```
 
 ---
